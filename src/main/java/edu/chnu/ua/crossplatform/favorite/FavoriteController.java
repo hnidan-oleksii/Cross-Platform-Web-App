@@ -11,6 +11,7 @@ public class FavoriteController {
     @GetMapping
     public String favorite(Model model) {
         model.addAttribute("pageTitle", "Favorite");
+        model.addAttribute("activeMenuItem", "favorite");
         return "books/books";
     }
 }

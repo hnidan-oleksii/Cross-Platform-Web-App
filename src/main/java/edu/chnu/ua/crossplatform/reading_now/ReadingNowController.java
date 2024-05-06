@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ReadingNowController {
     @GetMapping()
     public String readingNow(Model model) {
-        model.addAttribute("pageTitle", "Have Read");
+        model.addAttribute("pageTitle", "Reading Now");
+        model.addAttribute("activeMenuItem", "reading-now");
         return "books/books";
     }
 }

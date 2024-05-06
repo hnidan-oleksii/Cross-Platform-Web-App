@@ -11,6 +11,7 @@ public class ToReadController {
     @GetMapping
     public String trash(Model model) {
         model.addAttribute("pageTitle", "To Read");
+        model.addAttribute("activeMenuItem", "to-read");
         return "books/books";
     }
 }

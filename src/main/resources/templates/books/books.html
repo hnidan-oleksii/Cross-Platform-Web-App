@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}"
-      th:with="activeMenuItem='reading-now'"
+      th:with="activeMenuItem=${activeMenuItem}"
       lang="en">
 <head>
     <title th:text="${pageTitle}">Reading Now</title>

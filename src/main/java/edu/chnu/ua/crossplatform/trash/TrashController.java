@@ -11,6 +11,7 @@ public class TrashController {
     @GetMapping
     public String trash(Model model) {
         model.addAttribute("pageTitle", "Trash");
+        model.addAttribute("activeMenuItem", "trash");
         return "books/books";
     }
 }

@@ -11,6 +11,7 @@ public class HaveReadController {
     @GetMapping
     public String haveRead(Model model) {
         model.addAttribute("pageTitle", "Have Read");
+        model.addAttribute("activeMenuItem", "have-read");
         return "books/books";
     }
 }
