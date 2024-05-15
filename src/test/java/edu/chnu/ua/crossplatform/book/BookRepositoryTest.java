@@ -42,12 +42,21 @@ class BookRepositoryTest {
     @Test
     void testSaveBook() {
         BookId id = repository.nextId();
-        repository.save(new Book(id));
+        repository.save(new Book(id,
+                new Title("After Dark"),
+                new Author("Haruki Murakami"),
+                Genre.FANTASY,
+                new Publisher("Vintage Books"),
+                2008));
 
         entityManager.flush();
 
-        UUID idInDb = jdbcTemplate.queryForObject("SELECT id FROM tt_book", UUID.class);
-        assertThat(idInDb).isEqualTo(id.getId());
+        assertThat(jdbcTemplate.queryForObject("SELECT id FROM tt_book", UUID.class)).isEqualTo(id.getId());
+        assertThat(jdbcTemplate.queryForObject("SELECT title FROM tt_book", String.class)).isEqualTo("After Dark");
+        assertThat(jdbcTemplate.queryForObject("SELECT author FROM tt_book", String.class)).isEqualTo("Haruki Murakami");
+        assertThat(jdbcTemplate.queryForObject("SELECT genre FROM tt_book", Genre.class)).isEqualTo(Genre.FANTASY);
+        assertThat(jdbcTemplate.queryForObject("SELECT publisher FROM tt_book", String.class)).isEqualTo("Vintage Books");
+        assertThat(jdbcTemplate.queryForObject("SELECT publishing_year FROM tt_book", Integer.class)).isEqualTo(2008);
     }
 
     @TestConfiguration
