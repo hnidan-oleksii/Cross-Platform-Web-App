@@ -7,8 +7,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
-
 @Entity
 @Table(name = "tt_book")
 public class Book extends AbstractEntity<BookId> {
