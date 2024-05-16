@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -42,12 +44,14 @@ class BookRepositoryTest {
     @Test
     void testSaveBook() {
         BookId id = repository.nextId();
-        repository.save(new Book(id,
+        repository.save(
+                new Book(id,
                 new Title("After Dark"),
                 new Author("Haruki Murakami"),
                 Genre.FANTASY,
                 new Publisher("Vintage Books"),
-                2008));
+                2008
+        ));
 
         entityManager.flush();
 
@@ -57,6 +61,37 @@ class BookRepositoryTest {
         assertThat(jdbcTemplate.queryForObject("SELECT genre FROM tt_book", Genre.class)).isEqualTo(Genre.FANTASY);
         assertThat(jdbcTemplate.queryForObject("SELECT publisher FROM tt_book", String.class)).isEqualTo("Vintage Books");
         assertThat(jdbcTemplate.queryForObject("SELECT publishing_year FROM tt_book", Integer.class)).isEqualTo(2008);
+    }
+
+    @Test
+    void testFindAllPageable() {
+        saveBooks(8);
+        Sort sort = Sort.by(Sort.Direction.ASC, "title");
+
+        assertThat(repository.findAll(PageRequest.of(0, 5, sort)))
+                .hasSize(5)
+                .extracting(book -> book.getTitle().asString())
+                .containsExactly("After Dark 1", "After Dark 2", "After Dark 3", "After Dark 4", "After Dark 5");
+
+        assertThat(repository.findAll(PageRequest.of(1, 5, sort)))
+                .hasSize(3)
+                .extracting(book -> book.getTitle().asString())
+                .containsExactly("After Dark 6", "After Dark 7", "After Dark 8");
+
+        assertThat(repository.findAll(PageRequest.of(3, 5, sort))).isEmpty();
+    }
+
+    private void saveBooks(int numberOfBooks) {
+        for (int i = 0; i < numberOfBooks; i++) {
+            repository.save(new Book(
+                    repository.nextId(),
+                    new Title(String.format("After Dark %1", i)),
+                    new Author("Haruki Murakami"),
+                    Genre.FANTASY,
+                    new Publisher("Vintage Books"),
+                    2008
+            ));
+        }
     }
 
     @TestConfiguration
