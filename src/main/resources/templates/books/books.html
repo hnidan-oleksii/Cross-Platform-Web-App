@@ -21,49 +21,21 @@
                         <table class="min-w-full">
                             <thead>
                             <tr>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Title
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Author
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Genre
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Publisher
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Publishing Year
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
-                            </tr>
+                                <th th:replace="~{fragments/table :: header(#{book.title})}"></th>
+                                <th th:replace="~{fragments/table :: header(#{book.author})}"></th>
+                                <th th:replace="~{fragments/table :: header(#{book.genre})}"></th>
+                                <th th:replace="~{fragments/table :: header(#{book.publisher})}"></th>
+                                <th th:replace="~{fragments/table :: header(#{book.publishingYear})}"></th>
+                                <th th:replace="~{fragments/table :: header('')}"></th>
                             </thead>
                             <tbody>
                             <tr class="bg-white" th:each="book :${books}">
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900"
-                                    th:text="${book.getTitle().asString()}">
-                                    After Dark
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
-                                    th:text="${book.getAuthor().asString()}">
-                                    Haruki Murakami
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
-                                    th:text="${book.getGenre()}">
-                                    Fantasy
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
-                                    th:text="${book.getPublisher().asString()}">
-                                    Vintage Books
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
-                                    th:text="${book.getPublishingYear()}">
-                                    2008
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                </td>
+                                <td th:replace="~{fragments/table :: data(content=${book.getTitle().asString()}, primary=true)}"></td>
+                                <td th:replace="~{fragments/table :: data(content=${book.getAuthor().asString()})}"></td>
+                                <td th:replace="~{fragments/table :: data(content=${book.getGenre()})}"></td>
+                                <td th:replace="~{fragments/table :: data(content=${book.getPublisher().asString()})}"></td>
+                                <td th:replace="~{fragments/table :: data(content=${book.getPublishingYear()})}"></td>
+                                <th th:replace="~{fragments/table :: dataWithLink(#{book.edit}, '#')}"></th>
                             </tr>
                             </tbody>
                         </table>
