@@ -1,28 +1,28 @@
-package edu.chnu.ua.crossplatform.book;
+package edu.chnu.ua.crossplatform.books.book;
 
 import org.springframework.util.Assert;
 import org.testcontainers.shaded.com.google.common.base.MoreObjects;
 
 import java.util.Objects;
 
-public class Author {
-    private String author;
+public class Title {
+    private String title;
 
-    protected Author() {
+    protected Title() {
     }
 
-    public Author(String author) {
-        Assert.hasText(author, "author cannot be blank");
-        this.author = author;
+    public Title(String title) {
+        Assert.hasText(title, "title cannot be empty");
+        this.title = title;
     }
 
     public String asString() {
-        return author;
+        return title;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(author);
+        return Objects.hash(title);
     }
 
     @Override
@@ -33,14 +33,14 @@ public class Author {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        Author that = (Author) obj;
-        return Objects.equals(author, that.author);
+        Title that = (Title) obj;
+        return Objects.equals(title, that.title);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("author", author)
+                .add("title", title)
                 .toString();
     }
 }

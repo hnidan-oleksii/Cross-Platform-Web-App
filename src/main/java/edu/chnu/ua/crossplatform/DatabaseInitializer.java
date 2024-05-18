@@ -2,7 +2,7 @@ package edu.chnu.ua.crossplatform;
 
 import com.github.javafaker.Book;
 import com.github.javafaker.Faker;
-import edu.chnu.ua.crossplatform.book.*;
+import edu.chnu.ua.crossplatform.books.book.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

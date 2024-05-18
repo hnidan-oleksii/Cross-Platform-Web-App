@@ -1,4 +1,4 @@
-package edu.chnu.ua.crossplatform.book;
+package edu.chnu.ua.crossplatform.books.book;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

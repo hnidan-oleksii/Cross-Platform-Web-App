@@ -1,4 +1,4 @@
-package edu.chnu.ua.crossplatform.book;
+package edu.chnu.ua.crossplatform.books.book;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;

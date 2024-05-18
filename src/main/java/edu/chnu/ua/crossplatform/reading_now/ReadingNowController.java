@@ -1,6 +1,6 @@
 package edu.chnu.ua.crossplatform.reading_now;
 
-import edu.chnu.ua.crossplatform.book.BookService;
+import edu.chnu.ua.crossplatform.books.book.BookService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.ui.Model;

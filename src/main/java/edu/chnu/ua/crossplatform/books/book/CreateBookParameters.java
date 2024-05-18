@@ -1,4 +1,4 @@
-package edu.chnu.ua.crossplatform.book;
+package edu.chnu.ua.crossplatform.books.book;
 
 public class CreateBookParameters {
     private final Title title;
