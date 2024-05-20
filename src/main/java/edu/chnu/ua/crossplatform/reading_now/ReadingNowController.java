@@ -2,18 +2,16 @@ package edu.chnu.ua.crossplatform.reading_now;
 
 import edu.chnu.ua.crossplatform.books.BookValidationGroupSequence;
 import edu.chnu.ua.crossplatform.books.CreateBookFormData;
-import edu.chnu.ua.crossplatform.books.book.BookService;
-import edu.chnu.ua.crossplatform.books.book.Genre;
+import edu.chnu.ua.crossplatform.books.EditBookFormData;
+import edu.chnu.ua.crossplatform.books.EditMode;
+import edu.chnu.ua.crossplatform.books.book.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,5 +50,17 @@ public class ReadingNowController {
         }
         bookService.createBook(formData.toParameters());
         return "redirect:/";
+    }
+
+    @GetMapping(value = {"/{id}", "/reading-now/{id}"})
+    public String editBookForm(@PathVariable("id") BookId bookId, Model model) {
+        Book book = bookService
+                .getBook(bookId)
+                .orElseThrow(() -> new BookNotFoundException(bookId));
+
+        model.addAttribute("book", EditBookFormData.fromBook(book));
+        model.addAttribute("genres", List.of(Genre.values()));
+        model.addAttribute("editMode", EditMode.UPDATE);
+        return "books/edit";
     }
 }

@@ -9,9 +9,7 @@
 </head>
 <body>
 <div layout:fragment="page-content">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <h1 class="text-2xl font-semibold text-gray-900" th:text="${pageTitle}">Reading now</h1>
-    </div>
+    <div th:replace="~{fragments/titles :: title-with-button(title=#{book.title}, buttonIcon='book-add', buttonText=#{book.add}, buttonLink=@{'/'+${activeMenuItem}+'/create'})}"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div class="py-4">
             <div class="flex flex-col">
@@ -35,7 +33,7 @@
                                 <td th:replace="~{fragments/table :: data(content=${book.getGenre()}, hideOnMobile=true)}"></td>
                                 <td th:replace="~{fragments/table :: data(content=${book.getPublisher().asString()}, hideOnMobile=true)}"></td>
                                 <td th:replace="~{fragments/table :: data(content=${book.getPublishingYear()}, hideOnMobile=true)}"></td>
-                                <td th:replace="~{fragments/table :: dataWithLink(#{book.edit}, '#')}"></td>
+                                <td th:replace="~{fragments/table :: dataWithLink(#{book.edit}, @{'/'+${activeMenuItem}+'/'+${book.id.asString()}})}"></td>
                             </tr>
                             </tbody>
                         </table>

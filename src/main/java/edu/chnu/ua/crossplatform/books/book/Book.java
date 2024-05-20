@@ -1,6 +1,6 @@
 package edu.chnu.ua.crossplatform.books.book;
 
-import io.github.wimdeblauwe.jpearl.AbstractEntity;
+import io.github.wimdeblauwe.jpearl.AbstractVersionedEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tt_book")
-public class Book extends AbstractEntity<BookId> {
+public class Book extends AbstractVersionedEntity<BookId> {
     @NotNull
     private Title title;
 
@@ -64,5 +64,25 @@ public class Book extends AbstractEntity<BookId> {
 
     public @NotNull int getPublishingYear() {
         return publishingYear;
+    }
+
+    public void setTitle(@NotNull Title title) {
+        this.title = title;
+    }
+
+    public void setAuthor(@NotNull Author author) {
+        this.author = author;
+    }
+
+    public void setGenre(@NotNull Genre genre) {
+        this.genre = genre;
+    }
+
+    public void setPublisher(@NotNull Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setPublishingYear(@NotNull int publishingYear) {
+        this.publishingYear = publishingYear;
     }
 }
