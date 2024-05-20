@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping(value={"/", "/reading_now"})
+@RequestMapping(value ={"/", "reading-now"})
 public class ReadingNowController {
     private final BookService bookService;
 
@@ -34,14 +34,14 @@ public class ReadingNowController {
         return "books/books";
     }
 
-    @GetMapping("/create")
+    @GetMapping(value = {"/create", "/reading-now/create"})
     public String createBookForm(Model model) {
         model.addAttribute("book", new CreateBookFormData());
         model.addAttribute("genres", List.of(Genre.values()));
         return "books/edit";
     }
 
-    @PostMapping("/create")
+    @PostMapping(value = {"/create", "/reading-now/create"})
     public String createBook(@Validated(BookValidationGroupSequence.class)
                                  @ModelAttribute("book") CreateBookFormData formData,
                              BindingResult bindingResult,

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/have_read")
+@RequestMapping("/have-read")
 public class HaveReadController {
     @GetMapping
     public String haveRead(Model model) {
