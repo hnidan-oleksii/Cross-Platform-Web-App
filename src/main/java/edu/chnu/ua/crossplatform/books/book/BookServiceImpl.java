@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
+
 @Service
 @Transactional
 public class BookServiceImpl implements BookService {
@@ -31,5 +33,15 @@ public class BookServiceImpl implements BookService {
     @Override
     public Page<Book> getBooks(Pageable pageable) {
         return bookRepository.findAll(pageable);
+    }
+
+    @Override
+    public boolean bookWithTitleExists(Title title) {
+        return bookRepository.existsByTitle(title);
+    }
+
+    @Override
+    public boolean yearIsInAcceptableRange(Integer year) {
+        return year <= Year.now().getValue() && year >= 1500;
     }
 }

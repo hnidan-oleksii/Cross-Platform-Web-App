@@ -1,13 +1,31 @@
 package edu.chnu.ua.crossplatform.books;
 
 import edu.chnu.ua.crossplatform.books.book.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
+@NotExistingBook(groups = BookValidationGroupTwo.class)
 public class CreateBookFormData {
+    @NotBlank
+    @Size(max = 255, groups = BookValidationGroupOne.class)
     private String title;
+
+    @NotBlank
+    @Size(max = 255, groups = BookValidationGroupOne.class)
     private String author;
+
     private Genre genre;
+
+    @NotBlank
+    @Size(max = 255, groups = BookValidationGroupOne.class)
     private String publisher;
-    private int publishingYear;
+
+    @NotNull
+    @Digits(integer = 4, fraction = 0, groups = BookValidationGroupOne.class)
+    @NotInAcceptableRange(groups = BookValidationGroupOne.class)
+    private Integer publishingYear;
 
     public String getTitle() {
         return title;
@@ -41,11 +59,11 @@ public class CreateBookFormData {
         this.publisher = publisher;
     }
 
-    public int getPublishingYear() {
+    public Integer getPublishingYear() {
         return publishingYear;
     }
 
-    public void setPublishingYear(int publishingYear) {
+    public void setPublishingYear(Integer publishingYear) {
         this.publishingYear = publishingYear;
     }
 

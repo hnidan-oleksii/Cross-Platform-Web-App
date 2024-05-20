@@ -68,7 +68,6 @@
                                             th:field="*{genre}"
                                             class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
                                             th:classappend="${#fields.hasErrors('genre')?'border-red-300 focus:border-red-300 focus:ring-red-500':'focus:ring-purple-500 focus:border-purple-500'}">
-                                        <option value="" th:text="#{book.genre.placeholder}">Select genre</option>
                                         <option th:each="genre : ${genres}"
                                                 th:value="${genre}"
                                                 th:text="#{'Genre.' + ${genre.name()}}">Genre</option>

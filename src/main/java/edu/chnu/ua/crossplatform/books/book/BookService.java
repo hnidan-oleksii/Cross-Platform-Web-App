@@ -6,4 +6,6 @@ import org.springframework.data.domain.Pageable;
 public interface BookService {
     Book createBook(CreateBookParameters parameters);
     Page<Book> getBooks(Pageable pageable);
+    boolean bookWithTitleExists(Title title);
+    boolean yearIsInAcceptableRange(Integer year);
 }
