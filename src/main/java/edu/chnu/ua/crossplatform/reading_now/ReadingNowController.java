@@ -1,9 +1,6 @@
 package edu.chnu.ua.crossplatform.reading_now;
 
-import edu.chnu.ua.crossplatform.books.BookValidationGroupSequence;
-import edu.chnu.ua.crossplatform.books.CreateBookFormData;
-import edu.chnu.ua.crossplatform.books.EditBookFormData;
-import edu.chnu.ua.crossplatform.books.EditMode;
+import edu.chnu.ua.crossplatform.books.*;
 import edu.chnu.ua.crossplatform.books.book.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
@@ -36,11 +33,12 @@ public class ReadingNowController {
     public String createBookForm(Model model) {
         model.addAttribute("book", new CreateBookFormData());
         model.addAttribute("genres", List.of(Genre.values()));
+        model.addAttribute("activeMenuItem", "reading-now");
         return "books/edit";
     }
 
     @PostMapping(value = {"/create", "/reading-now/create"})
-    public String createBook(@Validated(BookValidationGroupSequence.class)
+    public String createBook(@Validated(CreateBookValidationGroupSequence.class)
                                  @ModelAttribute("book") CreateBookFormData formData,
                              BindingResult bindingResult,
                              Model model) {
@@ -61,6 +59,22 @@ public class ReadingNowController {
         model.addAttribute("book", EditBookFormData.fromBook(book));
         model.addAttribute("genres", List.of(Genre.values()));
         model.addAttribute("editMode", EditMode.UPDATE);
+        model.addAttribute("activeMenuItem", "reading-now");
         return "books/edit";
+    }
+
+    @PostMapping(value = {"/{id}", "/reading-now/{id}"})
+    public String editBook(@PathVariable("id") BookId bookId,
+                           @Validated(EditBookValidationGroupSequence.class)
+                               @ModelAttribute("book") EditBookFormData formData,
+                           BindingResult bindingResult,
+                           Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("genres", List.of(Genre.values()));
+            model.addAttribute("editMode", EditMode.UPDATE);
+            return "books/edit";
+        }
+        bookService.editBook(bookId, formData.toParameters());
+        return "redirect:/";
     }
 }

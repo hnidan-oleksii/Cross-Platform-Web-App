@@ -4,5 +4,5 @@ import jakarta.validation.GroupSequence;
 import jakarta.validation.groups.Default;
 
 @GroupSequence({Default.class, BookValidationGroupOne.class, BookValidationGroupTwo.class})
-public interface BookValidationGroupSequence {
+public interface CreateBookValidationGroupSequence {
 }

@@ -3,7 +3,7 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layouts/layout}" lang="en"
-        th:with="activeMenuItem='book'">
+        th:with="activeMenuItem=${activeMenuItem}">
 <head>
     <title>Book Form</title>
 </head>
@@ -11,53 +11,20 @@
 <div layout:fragment="page-content">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <h1 class="text-2xl font-semibold text-gray-900"
-            th:text="#{book.create}">Create Book</h1>
+            th:text="${editMode?.name() == 'UPDATE'} ? #{book.edit} : #{book.create}">Create book</h1>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div class="py-4">
             <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
                 <form id="book-form"
                       th:object="${book}"
-                      th:action="@{/create}"
+                      th:action="${editMode?.name() == 'UPDATE'} ? @{'/'+${activeMenuItem}+'/'+${book.id}} : @{'/'+${activeMenuItem}+'/create'}"
                       method="post">
                     <div>
                         <div th:replace="~{fragments/forms :: fielderrors}"></div>
                         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                            <!-- Title -->
-                            <div class="sm:col-span-6">
-                                <label for="title" class="block text-sm font-medium text-gray-700"
-                                       th:text="#{book.title}">
-                                    Title
-                                </label>
-                                <div class="mt-1">
-                                    <input id="title"
-                                           type="text"
-                                           th:field="*{title}"
-                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-                                           th:classappend="${#fields.hasErrors('title')?'border-red-300 focus:border-red-300 focus:ring-red-500':'focus:ring-purple-500 focus:border-purple-500'}">
-                                </div>
-                                <p th:if="${#fields.hasErrors('title')}"
-                                   th:text="${#strings.listJoin(#fields.errors('title'), ' ')}"
-                                   class="mt-2 text-sm text-red-600" id="title-error">Title validation error message(s).</p>
-                            </div>
-                            <!-- Author -->
-                            <div class="sm:col-span-6">
-                                <label for="author" class="block text-sm font-medium text-gray-700"
-                                       th:text="#{book.author}">
-                                    Author
-                                </label>
-                                <div class="mt-1">
-                                    <input id="author"
-                                           type="text"
-                                           th:field="*{author}"
-                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-                                           th:classappend="${#fields.hasErrors('author')?'border-red-300 focus:border-red-300 focus:ring-red-500':'focus:ring-purple-500 focus:border-purple-500'}">
-                                </div>
-                                <p th:if="${#fields.hasErrors('author')}"
-                                   th:text="${#strings.listJoin(#fields.errors('author'), ' ')}"
-                                   class="mt-2 text-sm text-red-600" id="author-error">Author validation error message(s).</p>
-                            </div>
-                            <!-- Genre -->
+                            <div th:replace="~{fragments/forms :: textinput(labelText=#{book.title}, fieldName='title', cssClass='sm:col-span-6')}"></div>
+                            <div th:replace="~{fragments/forms :: textinput(labelText=#{book.author}, fieldName='author', cssClass='sm:col-span-6')}"></div>
                             <div class="sm:col-span-6">
                                 <label for="genre" class="block text-sm font-medium text-gray-700"
                                        th:text="#{book.genre}">
@@ -77,41 +44,9 @@
                                    th:text="${#strings.listJoin(#fields.errors('genre'), ' ')}"
                                    class="mt-2 text-sm text-red-600" id="genre-error">Genre validation error message(s).</p>
                             </div>
-                            <!-- Publisher -->
-                            <div class="sm:col-span-6">
-                                <label for="publisher" class="block text-sm font-medium text-gray-700"
-                                       th:text="#{book.publisher}">
-                                    Publisher
-                                </label>
-                                <div class="mt-1">
-                                    <input id="publisher"
-                                           type="text"
-                                           th:field="*{publisher}"
-                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-                                           th:classappend="${#fields.hasErrors('publisher')?'border-red-300 focus:border-red-300 focus:ring-red-500':'focus:ring-purple-500 focus:border-purple-500'}">
-                                </div>
-                                <p th:if="${#fields.hasErrors('publisher')}"
-                                   th:text="${#strings.listJoin(#fields.errors('publisher'), ' ')}"
-                                   class="mt-2 text-sm text-red-600" id="publisher-error">Publisher validation error message(s).</p>
-                            </div>
-                            <!-- Publishing Year -->
-                            <div class="sm:col-span-6">
-                                <label for="publishingYear" class="block text-sm font-medium text-gray-700"
-                                       th:text="#{book.publishingYear}">
-                                    Publishing Year
-                                </label>
-                                <div class="mt-1">
-                                    <input id="publishingYear"
-                                           type="text"
-                                           th:field="*{publishingYear}"
-                                           th:placeholder="#{book.publishingYear.placeholder}"
-                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-                                           th:classappend="${#fields.hasErrors('publishingYear')?'border-red-300 focus:border-red-300 focus:ring-red-500':'focus:ring-purple-500 focus:border-purple-500'}">
-                                </div>
-                                <p th:if="${#fields.hasErrors('publishingYear')}"
-                                   th:text="${#strings.listJoin(#fields.errors('publishingYear'), ' ')}"
-                                   class="mt-2 text-sm text-red-600" id="publishingYear-error">Publishing year validation error message(s).</p>
-                            </div>
+                            <div th:replace="~{fragments/forms :: textinput(labelText=#{book.publisher}, fieldName='publisher', cssClass='sm:col-span-6')}"></div>
+                            <div th:replace="~{fragments/forms :: textinput(labelText=#{book.publishingYear}, fieldName='publishingYear', cssClass='sm:col-span-6', placeholder=#{book.publishingYear.placeholder})}"></div>
+                            <input type="text" th:field="*{version}" th:id="version" class="hidden">
                         </div>
                     </div>
                     <div class="mt-8 border-t border-gray-200 pt-5">
