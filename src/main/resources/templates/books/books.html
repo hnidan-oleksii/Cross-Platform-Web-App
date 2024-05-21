@@ -12,6 +12,9 @@
 <body>
 <div layout:fragment="page-content">
     <div th:replace="~{fragments/titles :: title-with-button(title=#{book.title}, buttonIcon='book-add', buttonText=#{book.add}, buttonLink=@{'/'+${activeMenuItem}+'/create'})}"></div>
+    <div th:if="${deletedBookTitle}">
+        <div th:replace="fragments/alerts :: success(#{book.delete.success(${deletedBookTitle.asString()})})"></div>
+    </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div class="py-4">
             <div class="flex flex-col">
@@ -51,6 +54,7 @@
             </div>
         </div>
     </div>
+    <script th:replace="~{fragments/alerts :: success-js}"></script>
 </div>
 <div layout:fragment="modals-content" x-data="modalDeleteConfirmation()">
     <div x-show="isVisible()"
