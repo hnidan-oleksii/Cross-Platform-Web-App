@@ -77,4 +77,14 @@ public class ReadingNowController {
         bookService.editBook(bookId, formData.toParameters());
         return "redirect:/";
     }
+
+    @PostMapping(value = {"/{id}/delete", "/reading-now/{id}/delete"})
+    public String deleteBook(@PathVariable("id") BookId bookId) {
+        Book book = bookService
+                .getBook(bookId)
+                .orElseThrow(() -> new BookNotFoundException(bookId));
+
+        bookService.deleteBook(bookId);
+        return "redirect:/";
+    }
 }

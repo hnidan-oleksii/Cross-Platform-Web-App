@@ -12,4 +12,5 @@ public interface BookService {
     boolean bookWithTitleExists(Title title);
     boolean yearIsInAcceptableRange(Integer year);
     Book editBook(BookId bookId, EditBookParameters bookParameters);
+    void deleteBook(BookId bookId);
 }
