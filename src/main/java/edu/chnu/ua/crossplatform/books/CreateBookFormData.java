@@ -27,6 +27,8 @@ public class CreateBookFormData {
     @NotInAcceptableRange(groups = BookValidationGroupOne.class)
     private Integer publishingYear;
 
+    private long version;
+
     public String getTitle() {
         return title;
     }
@@ -65,6 +67,14 @@ public class CreateBookFormData {
 
     public void setPublishingYear(Integer publishingYear) {
         this.publishingYear = publishingYear;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public CreateBookParameters toParameters() {
