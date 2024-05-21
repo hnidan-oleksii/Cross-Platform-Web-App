@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class ReadingNowController {
                              Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("genres", List.of(Genre.values()));
+            model.addAttribute("activeMenuItem", "reading-now");
             return "books/edit";
         }
         bookService.createBook(formData.toParameters());
@@ -79,11 +81,13 @@ public class ReadingNowController {
     }
 
     @PostMapping(value = {"/{id}/delete", "/reading-now/{id}/delete"})
-    public String deleteBook(@PathVariable("id") BookId bookId) {
+    public String deleteBook(@PathVariable("id") BookId bookId,
+                             RedirectAttributes redirectAttributes) {
         Book book = bookService
                 .getBook(bookId)
                 .orElseThrow(() -> new BookNotFoundException(bookId));
 
+        redirectAttributes.addFlashAttribute("deletedBookTitle", book.getTitle());
         bookService.deleteBook(bookId);
         return "redirect:/";
     }
